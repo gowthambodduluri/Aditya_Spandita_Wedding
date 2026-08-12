@@ -25,7 +25,7 @@ function initInvitationCover() {
     btnUnseal.addEventListener('click', () => {
       cover.classList.add('opened');
       toggleAudio(true);
-      
+
       // Trigger subtle celebratory petal burst
       if (window.ParticleEngine) {
         // burst effect
@@ -84,7 +84,7 @@ function initNavbar() {
 function initHeroSlider() {
   const slides = document.querySelectorAll('.hero-slide-img');
   if (slides.length === 0) return;
-  
+
   let currentSlide = 0;
   setInterval(() => {
     slides[currentSlide].classList.remove('active');
@@ -277,6 +277,9 @@ function initPhotoGallery() {
 // GOOGLE APPS SCRIPT WEB APP ENDPOINT FOR RSVPS
 const GOOGLE_SHEET_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwHsXr5ZB8GGfDH5OjHku-X9YMQPHsjfLmMmKaRIsSltNhXHC0TriYpVMSmd2l5tMO8ww/exec';
 
+// Secret passphrase to prevent unauthorized form spam
+const RSVP_SECRET = 'AdityaSpandita2026';
+
 function initRSVPForm() {
   const form = document.getElementById('rsvpForm');
   const successMsg = document.getElementById('rsvpSuccess');
@@ -318,6 +321,7 @@ function initRSVPForm() {
     if (GOOGLE_SHEET_WEB_APP_URL && GOOGLE_SHEET_WEB_APP_URL.trim() !== '') {
       try {
         const formData = new FormData();
+        formData.append('secret', RSVP_SECRET); // Anti-spam passphrase check
         formData.append('timestamp', timestamp);
         formData.append('name', name);
         formData.append('email', email);
@@ -454,7 +458,7 @@ function playFluteNote(freq, duration) {
 
 function startIndianFluteSynth() {
   if (synthTimer) clearInterval(synthTimer);
-  
+
   let noteIndex = 0;
   synthTimer = setInterval(() => {
     if (!isAudioPlaying) return;
